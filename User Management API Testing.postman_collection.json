@@ -1,0 +1,265 @@
+{
+  "info": {
+    "_postman_id": "0278456f-f0cf-4eef-97a4-1394ba58bf1e",
+    "name": "User Management API Testing",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59425820",
+    "_collection_link": "https://go.postman.co/collection/59425820-0278456f-f0cf-4eef-97a4-1394ba58bf1e?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get All Users",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code should be 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\nconst responseData = pm.response.json();\r\n\r\npm.test(\"Response should contain users\",function(){\r\n    pm.expect(responseData).to.have.property(\"users\");\r\n});\r\n\r\npm.test(\"First users id should be 1\",function(){\r\n    pm.expect(responseData.users[0].id).to.eql(1);\r\n});\r\n\r\npm.test(\"First users name should be Emily\",function(){\r\n    pm.expect(responseData.users[0].firstName).to.eql(\"Emily\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://dummyjson.com/users",
+          "protocol": "https",
+          "host": [
+            "dummyjson",
+            "com"
+          ],
+          "path": [
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Single User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code should be 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\nconst responseData = pm.response.json();\r\n\r\npm.test(\"User ID should be 1\", function () {\r\n    pm.expect(responseData.id).to.eql(1);\r\n});\r\n\r\npm.test(\"User should be Emily Johnson\", function () {\r\n    pm.expect(responseData.firstName).to.eql(\"Emily\");\r\n    pm.expect(responseData.lastName).to.eql(\"Johnson\");\r\n});\r\n\r\npm.test(\"User should have an email\", function () {\r\n    pm.expect(responseData.email).to.exist;\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://dummyjson.com/users/1",
+          "protocol": "https",
+          "host": [
+            "dummyjson",
+            "com"
+          ],
+          "path": [
+            "users",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Non-Existing User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code should be 404\", function () {\r\n    pm.response.to.have.status(404);\r\n});\r\n\r\nconst responseData = pm.response.json();\r\n\r\npm.test(\"Error message should be present\", function () {\r\n    pm.expect(responseData).to.have.property(\"message\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://dummyjson.com/users/9999",
+          "protocol": "https",
+          "host": [
+            "dummyjson",
+            "com"
+          ],
+          "path": [
+            "users",
+            "9999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create New User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code should be 201\", function () {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\nconst responseData = pm.response.json();\r\n\r\npm.test(\"Response should contain an ID\", function () {\r\n    pm.expect(responseData).to.have.property(\"id\");\r\n});\r\n\r\npm.test(\"First name should be Harsh\", function () {\r\n    pm.expect(responseData.firstName).to.eql(\"Harsh\");\r\n});\r\n\r\npm.test(\"Last name should be Manohar\", function () {\r\n    pm.expect(responseData.lastName).to.eql(\"Manohar\");\r\n});\r\n\r\npm.test(\"Age should be 22\", function () {\r\n    pm.expect(responseData.age).to.eql(22);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstName\":\"Harsh\",\r\n    \"lastName\":\"Manohar\",\r\n    \"age\":22\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://dummyjson.com/users/add",
+          "protocol": "https",
+          "host": [
+            "dummyjson",
+            "com"
+          ],
+          "path": [
+            "users",
+            "add"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Verify Created User",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://dummyjson.com/users/209",
+          "protocol": "https",
+          "host": [
+            "dummyjson",
+            "com"
+          ],
+          "path": [
+            "users",
+            "209"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update User - PUT.",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "{{bearer_token_1286}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"firstName\":\"Harsh\",\r\n\"lastName\":\"Updated\",\r\n\"age\":23\r\n}\r\n\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://dummyjson.com/users/1",
+          "protocol": "https",
+          "host": [
+            "dummyjson",
+            "com"
+          ],
+          "path": [
+            "users",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update User-PATCH",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"age\":24\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://dummyjson.com/users/1",
+          "protocol": "https",
+          "host": [
+            "dummyjson",
+            "com"
+          ],
+          "path": [
+            "users",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Remove a user",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code should be 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\nconst responseData = pm.response.json();\r\n\r\npm.test(\"User should be marked as deleted\", function () {\r\n    pm.expect(responseData.isDeleted).to.eql(true);\r\n});\r\n\r\npm.test(\"Deletion date should be present\", function () {\r\n    pm.expect(responseData).to.have.property(\"deletedOn\");\r\n});\r\n\r\npm.test(\"Deleted user ID should be 1\", function () {\r\n    pm.expect(responseData.id).to.eql(1);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "https://dummyjson.com/users/1",
+          "protocol": "https",
+          "host": [
+            "dummyjson",
+            "com"
+          ],
+          "path": [
+            "users",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
