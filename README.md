@@ -1,2 +1,5 @@
-# user-management-api-testing
-REST API testing using Postman, covering CRUD operations, positive and negative test cases, and automated response validation.
+# User Management API Testing with Postman
+
+A hands-on REST API testing project using Postman and DummyJSON.
+
+This project focuses on testing user management API endpoints through CRUD operations, positive and negative test scenarios, response validation, and automated test execution.
